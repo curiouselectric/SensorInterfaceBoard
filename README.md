@@ -48,15 +48,19 @@ It runs on an ATMega328 running at 8MHz with selectable baud serial (up to 57600
 
 ## RS485 Sensor Types
 
-There are a huge range of RS485 sensors for many different variables. I am looking to cover as many RS485 sensors as I can
+There are a huge range of RS485 sensors for many different variables. I'd like this unit to be adaptable to work with a variety of sensors with minila code changes.
 
-The firmware i
+This code base also works with other, non-RS485 sensors, such as wind speed sensors, wind vanes and solar irradiance sensors.
+
 
 ## Sensors Implemented:
+This is a list of the sensor types which have been implemented with this software, Along with the version number they were added.
 
-Sensor Name      | Link   | Type   | Notes  
----------------------|----------|---------|----------|
-Vector Insrutments NRG #40C |  |  | ||
+
+
+Sensor Name                |         Ref         | ID                 | Link                                                 | Notes  |
+---------------------------|---------------------|--------------------|-----------------------------------------------------|--------|
+Soil Temperature & Humidity| ZTS-3000            | ZTS-3000-TR-WS-N01 |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
 
 
 
