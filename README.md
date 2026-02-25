@@ -58,9 +58,9 @@ This is a list of the sensor types which have been implemented with this softwar
 
 
 
-Sensor Name                |         Ref         | ID                 | Link                                                 | Notes  |
----------------------------|---------------------|--------------------|-----------------------------------------------------|--------|
-Soil Temperature & Humidity| ZTS-3000            | ZTS-3000-TR-WS-N01 |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
+Sensor Name                |  Ref  |  Version |   ID                   | Link                                                 | Notes  |
+---------------------------|-------|----------|------------------------|------------------------------------------------------|--------|
+Soil Temperature & Humidity|ZTS-3000|1.0      | ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
 
 
 
