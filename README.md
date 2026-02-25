@@ -35,7 +35,7 @@ In this mode then the unit responds to serial requests made. You ask the sensor 
 
 ## Broadcast Mode
 
-In this mode then the unit regularly sends data via the serial connunication. It will send the averaged data for (0) 1 second, (1) 10 second, (2) 1 min, (3) 10 min and (4) 1 hour averaged data. If this is set to (5) then the unit does not send any data. The send mdoe is stored in EEPROM, so it will start sending data again even if power is lost.
+In this mode then the unit regularly sends data via the serial connunication. It will send the averaged data for (0) 1 second, (1) 10 second, (2) 1 min, (3) 10 min and (4) 1 hour averaged data. If this is set to (5) then the unit does not send any data. The send mode is stored in EEPROM, so it will start sending data again even if power is lost.
 
 ![Broadcast](https://github.com/curiouselectric/RS485InterfaceBoard/blob/048843a24f9ec3a42a6946c3067e17d5d328104e/RS485%20Interface%20Board%20Instructions/Images/RS485%20Interface%20%20broadcast.png?raw=true)
 
@@ -43,7 +43,7 @@ Boradcast mode works well if the logger is always listening and you only have on
 
 The two modes work together - you can have the unit sending regular data and also responding to requests.
 
-It runs on an ATMega328 running at 8MHz with selectable baud serial (up to 57600). It comes pre-programmed, but code can be uploaded via the Arduino IDE, using the MiniCore board add-on. See firmware for more details.
+It runs on an ATMega328 running at 16MHz with selectable baud serial (up to 57600). It comes pre-programmed, but new code can be uploaded via the Arduino IDE, with the Uno bootloader. See firmware for more details.
 
 
 ## RS485 Sensor Types
@@ -52,10 +52,8 @@ There are a huge range of RS485 sensors for many different variables. I'd like t
 
 This code base also works with other, non-RS485 sensors, such as wind speed sensors, wind vanes and solar irradiance sensors.
 
-
 ## Sensors Implemented:
 This is a list of the sensor types which have been implemented with this software, Along with the version number they were added.
-
 
 
 Sensor Name                |  Ref  |  Version |   ID                   | Link                                                 | Notes  |
@@ -77,7 +75,6 @@ There is one reset switch, one user input switch and one LED output.
 ## Board ID Number
 
 Each unit can have a unique ID (using a push link 6 pin pad for 0-7 values), so multiple units can be added to a serial bus, if needed. The defalt is 0 (no links used).
-
 
 ## PCB User Switch and User LED
 
@@ -105,7 +102,7 @@ This uses an ATMega328 running at 16MHz with 3.3v or 5V supply.
 
 ## Initial bootloader installation:
 
-
+UPDATE
 
 You should not need to do this, as the unit should come with this already installed. This is just for information.
 
@@ -121,7 +118,10 @@ Choose the "ATMega328" option with the "External 8MHz Oscillator" set.
 
 You can then use the 'Burn Bootloader' option within 'Tools' in the Arduino IDE. This will install the Minicore bootloader.
 
+
 ## Program via Arduino IDE
+
+UPDATE
 
 To program it then MiniCore is used:
 
@@ -136,6 +136,8 @@ You can then upload code by choosing the "ATMega328" option with the "External 8
 It returns the average values and information when requested on serial port.
 
 At all other times then the unit is asleep.
+
+
 
 ## Wind Speed data:
 
