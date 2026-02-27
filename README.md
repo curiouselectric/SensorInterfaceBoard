@@ -158,9 +158,9 @@ Returns: "aI0CHBD9600?^^#"  // Where 9600 is the baud rate
 
 ## Set Baud Rate:
 
-Request: "aaI0STBD\*#"  Where \* is (0)1200, (1)2400, (2)9600, (3)57600, (4)115200
+Request: "aaI0STBD\*?^^#"  Where \* is (0)1200, (1)2400, (2)9600, (3)57600, (4)115200
 
-Returns: "aaBD9600#"   // Where 9600 is the baud rate + CRC if requested
+Returns: "aaI0BD9600?^^#"   // Where 9600 is the baud rate + CRC if requested
 
 ## What is ID?:
 
@@ -185,7 +185,7 @@ You can request the ID:
 
 Request: "aaI*ID?^^#"  The * value can be anything.
 
-Returns: "aaIXID:X?^^#"   // Where 9600 is the baud rate + CRC if requested
+Returns: "aaIXID:X?^^#"   // Where X is the device ID + CRC if requested
 
 ## Request Data from ONE channel
 
@@ -217,7 +217,7 @@ The min and max of each channel are logged. These are reset if the data is sent 
 
 Request: "aaI0RESET?#" ("aaI0RESET?d9#" with CRC)
 
-Returns: "aaRESET#"
+Returns: "aaI0RSTOK#"
 
 ## Serial 'Button' press
 
@@ -233,13 +233,13 @@ Returns: "aaSEND*?^^#", where * is the time interval to send data (0->1->2->3->4
 
 Request: "aaI0SWV?^^#"
 
-Returns: "aaDT:SM?^^#" where SM is the device type (SM = Soil Moisture) - check the sensor list for these 2 char codes.
+Returns: "aaI0SWV:1.0?^^#" (where 1.0 is the software version)
 
 ## What is the device type?:
 
 Request: "aaI0DT?^^#""
 
-Returns: "aaSWV:1.0?^^#" (where 1.0 is the software version)
+Returns: "aaI0DT:SM?^^#" where SM is the device type (SM = Soil Moisture) - check the sensor list for these 2 char codes.
 
 ## Add CRC check:
 
@@ -265,15 +265,14 @@ You can use this online calculator to check your CRC: https://crccalc.com/ The t
 
 If data is not that length or does not have 'aa' and '#' at start/end then return with send "aaFAIL\*\*#" error code. All will have CRC on these codes, if requested.
 
-"aaFAIL1#" = String too long
-
-"aaFAIL2#" = Unit ID not correct/not a number
-
-"aaFAIL3#" = Channel ID is not correct/not a number
-
-"aaFAIL4#" = Average not correct/not a number
-
-"aaFAIL5#" = Start/End chars not correct
++ "aaFAILCRC": CRC check fail
++  "aaFAILTL": String too long
++  "aaFAILID": Problem with ID
++  "aaFAILIDX": ID not correct to device
++  "aaFAILPE": No aa and # on the string
++  "aaFAILBD": Baud rate change fail
++  "aaFAILCN": Channel number requested is greater than channels existing
++  "aaFAILCMD": Command not recognised 
 
 
 # Sensor Specific Commands
