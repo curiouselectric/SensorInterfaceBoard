@@ -265,14 +265,14 @@ You can use this online calculator to check your CRC: https://crccalc.com/ The t
 
 If data is not that length or does not have 'aa' and '#' at start/end then return with send "aaFAIL\*\*#" error code. All will have CRC on these codes, if requested.
 
-+ "aaFAILCRC": CRC check fail
-+  "aaFAILTL": String too long
-+  "aaFAILID": Problem with ID
-+  "aaFAILIDX": ID not correct to device
-+  "aaFAILPE": No aa and # on the string
-+  "aaFAILBD": Baud rate change fail
-+  "aaFAILCN": Channel number requested is greater than channels existing
-+  "aaFAILCMD": Command not recognised 
++ "aaFAILCRC?^^#": CRC check fail
++  "aaFAILTL?^^#": String too long
++  "aaFAILID?^^#": Problem with ID
++  "aaFAILIDX?^^#": ID not correct to device
++  "aaFAILPE?^^#": No aa and # on the string
++  "aaFAILBD?^^#": Baud rate change fail
++  "aaFAILCN?^^#": Channel number requested is greater than channels existing
++  "aaFAILCMD?^^#": Command not recognised 
 
 
 # Sensor Specific Commands
