@@ -137,15 +137,11 @@ It returns the average values and information when requested on serial port.
 
 At all other times then the unit is asleep.
 
-
-
-
-
 ## Set the unit to broadcast:
 
-Request: "aaI0SEND?#" where ? is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
+Request: "aaI0SEND*?#" where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
 
-Returns: "aaI0SENDOK#" + CRC if requested
+Returns: "aaI0SEND*#" + CRC if requested where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
 
 You can also set the unit to broadcast using the user switch. Press the button for around 0.5s or more then release. This will go through the boradcast modes from 0-1-2-3-4-5 then back round to 0. The LED will flash the number of times for the setting (so send = 0 the unit will not flash, but data will appear within 1 second!).
 
@@ -153,9 +149,9 @@ If the unit is in broadcast mode then the minimum and maximum wind speeds and th
 
 ## What is baud rate?:
 
-Request: "aaI0BD#" ("aaI0BD?dc#" with CRC)
+Request: "aaI0STBD?#" ("aaI0BD?dc#" with CRC)
 
-Returns: "aaBD9600#"  // Where 9600 is the baud rate + CRC if requested
+Returns: "aI0CHBD9600#"  // Where 9600 is the baud rate + CRC if requested
 
 ## Set Baud Rate:
 
@@ -165,11 +161,11 @@ Returns: "aaBD9600#"   // Where 9600 is the baud rate + CRC if requested
 
 ## What is ID?:
 
-Mentioned at start up of unit - it is solder-programmed... cannot be changed in code.
+Mentioned at start up of unit - it is hardware set... and cannot be changed in code.
 
-ID selection is by using a blob of solder to connect together some pads labelled A0, A1 and A2. The default is for no pads to be soldered and the ID is 0. This means the unit will respond to "I0" as the ID.
+ID selection is by using a shorting link on the pads labelled 1, 2 and 4. The default is for no pads to be connected and the ID is 0. This means the unit will respond to "I0" as the ID.
 
-To change the ID to another number from 0-7 then we can solder the different connection pads to create a binay number. The connections are:
+To change the ID to another number from 0-7 then use a shorting link on the pins to create a binay number. The connections are:
 
 1    |2    |4     | ID
 -------|-------|-------|----
@@ -182,6 +178,15 @@ CONN |NC     |CONN | 5
 NC     |CONN |CONN | 6
 CONN |CONN |CONN | 7
 
+You can request the ID:
+
+Request: "aaI*ID?^^#"  The * value can be anything.
+
+Returns: "aaIXID:X?^^#"   // Where 9600 is the baud rate + CRC if requested
+
+
+
+
 ## Reset the Min and Max value:
 
 The min and max of each channel are logged. These are reset if the data is sent in broadcast mode. If the unit is in Response mode then you need to reset the min/max when you have taken the data.
@@ -192,7 +197,25 @@ Returns: "aaRESET#"
 
 ## Serial 'Button' press
 
+You can simulate a button press with a serial command. This might be useful for some logging applications
+
 The command "aaI0SWA?^^#"  (Where ^^ is the CRC of the data before the ?) will act just like a button press. This is for control via a data logger serial port without access to the physical switch.
+
+Request: "aaI0SWA?^^#" 
+
+Returns: "aaSEND*?^^#", where * is the time interval to send data (0->1->2->3->4->5->0 etc, with 5 never sending)
+
+## What is the software version?:
+
+Request: "aaI0SWV?^^#"
+
+Returns: "aaDT:SM?^^#" where SM is the device type (SM = Soil Moisture) - check the sensor list for these 2 char codes.
+
+## What is the device type?:
+
+Request: "aaI0DT?^^#""
+
+Returns: "aaSWV:1.0?^^#" (where 1.0 is the software version)
 
 ## Add CRC check:
 
