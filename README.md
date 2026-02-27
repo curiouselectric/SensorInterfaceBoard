@@ -55,22 +55,22 @@ This code base also works with other, non-RS485 sensors, such as wind speed sens
 ## Sensors Implemented:
 This is a list of the sensor types which have been implemented with this software, Along with the version number they were added.
 
-
-Sensor Name                |  Ref  |  Version |   ID                   | Link                                                 | Notes  |
----------------------------|-------|----------|------------------------|------------------------------------------------------|--------|
-Soil Temperature & Humidity|ZTS-3000|1.0      | ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
-
-
-
-
-
+Sensor Name                |  Ref  |  Version | Device Type  |   ID                   | Link                                                 | Notes  |
+---------------------------|-------|----------|--------------|------------------------|------------------------------------------------------|--------|
+Soil Temperature & Humidity|ZTS-3000|1.0      | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
+PAR Sensor| |    | PR           | | |        |
 
 # Hardware
 
 The PCB was designed in KiCAD and is available here. A small PCB has been designed.
 
-There is one reset switch, one user input switch and one LED output.
+There is one reset switch, one user input switch and one LED output. 
 
+There is a step-up DC-DC converter with power control (to power higher voltage sensors). 
+
+There is a TTL to RS485 converter (to connect to the RS485 sensors)
+
+There is a 4 pin 'Grove'-type connector for direct connection I2C (code for this is not yet implemented) 
 
 ## Board ID Number
 
@@ -135,13 +135,16 @@ You can then upload code by choosing the "ATMega328" option with the "External 8
 
 It returns the average values and information when requested on serial port.
 
+If the 8-bit CRC (Cyclic Redundancy Check) is used then each request must have a 2 char CRC added between the ? and # within these commands (labelled ^^ here).
+For the responses, if no CRC enabled then the ?^^ within these commands is NOT returned. You must use the ? for a command, but the response will not contain it.
+
 At all other times then the unit is asleep.
 
 ## Set the unit to broadcast:
 
-Request: "aaI0SEND*?#" where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
+Request: "aaI0SEND*?^^#" where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
 
-Returns: "aaI0SEND*#" + CRC if requested where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
+Returns: "aaI0SEND*?^^#" + CRC if requested where * is an int (0)= 1s data, (1)= 10s data, (2)= 60s/1 min data, (3)= 600s/10 min data, (4)= 3600s/1hr data, (5)= NO data
 
 You can also set the unit to broadcast using the user switch. Press the button for around 0.5s or more then release. This will go through the boradcast modes from 0-1-2-3-4-5 then back round to 0. The LED will flash the number of times for the setting (so send = 0 the unit will not flash, but data will appear within 1 second!).
 
@@ -151,7 +154,7 @@ If the unit is in broadcast mode then the minimum and maximum wind speeds and th
 
 Request: "aaI0STBD?#" ("aaI0BD?dc#" with CRC)
 
-Returns: "aI0CHBD9600#"  // Where 9600 is the baud rate + CRC if requested
+Returns: "aI0CHBD9600?^^#"  // Where 9600 is the baud rate 
 
 ## Set Baud Rate:
 
@@ -184,8 +187,29 @@ Request: "aaI*ID?^^#"  The * value can be anything.
 
 Returns: "aaIXID:X?^^#"   // Where 9600 is the baud rate + CRC if requested
 
+## Request Data from ONE channel
 
+Request: “aaI0R00A*?^^#” where 00 is the channel number (00, 01 etc) and * is the averaging period (* = 0 for 1 sec data, 1 for 10 sec data, 2 for 60 sec (1 min) data, 3 for 600 sec (10 min) data and 4 for 3600 sec (1 hr) data 
 
+Returns:  "aaI0R00A*:123.40:123.40:123.40?^^#"  // This wil return the average data then : then the minimum value then : then the maxximum value.
+
+## Request Data from ALL channels
+
+Request: “aaI0RAAA3?^^#”
+
+Returns: "aaI0RAAA1:123.40:567.80?^^#" where the first item of data is channel 0, the next is channel 1. This will depend upon the number of channels.
+
+## Request ALL Minimum data
+
+Request: “aaI0RMNA4?^^#”  - does not matter what averaging period. min/max are just the min/max seen at max data rate.
+
+Returns: "aaI0RMN:123.40:567.80?^^#"  where the first item of data is channel 0, the next is channel 1. This will depend upon the number of channels.
+
+## Request ALL Maximum data
+
+Request: “aaI0RMXA0?^^#”  - does not matter what averaging period. min/max are just the min/max seen at max data rate.
+
+Returns: "aaI0RMX:123.40:567.80?^^#"  where the first item of data is channel 0, the next is channel 1. This will depend upon the number of channels.
 
 ## Reset the Min and Max value:
 
@@ -256,7 +280,12 @@ If data is not that length or does not have 'aa' and '#' at start/end then retur
 For each sensor type there are additional commands. These are only available if the unit is in the correct mode.
 They are listed here.
 
-## Wind Speed Sensor (Vane and Anemometer)
+## 'SM' Soil Mositure Sensor
+
+There are no extra commands.
+
+
+## 'WS' Wind Speed Sensor (Vane and Anemometer)
 
 ### Wind Speed data:
 
