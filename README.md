@@ -80,7 +80,7 @@ Each unit can have a unique ID (using a push link 6 pin pad for 0-7 values), so 
 
 There is one user switch and one user LED on the unit.
 
-The LED will show a regular flash every 5 seconds. This will briefly flash once every 5 seconds if the unit is in 'Response' mode. The LED will briefyl flash twice every 5 seconds if the unit is in 'Broadcast' mode. Data will be sent at the broadcast rate.
+The LED will show a regular flash every 5 seconds. This will briefly flash once every 5 seconds if the unit is in 'Response' mode. The LED will briefly flash twice every 5 seconds if the unit is in 'Broadcast' mode. Data will be sent at the broadcast rate.
 
 The LED will also flash whenever data is sent of the serial port. The LED will go on before data sent and then off after data is sent.
 
@@ -139,51 +139,7 @@ At all other times then the unit is asleep.
 
 
 
-## Wind Speed data:
 
-Request: “aaI0WSA4#”  ("aaI0WSA4?19#" with CRC)  Where 0 is an ID from 0-7 set by solder on PCB. 4 is the averaging period (0=1s, 1=10s, 2 = 60s, 3 = 600s, 4=3600s)
-
-Returns: "aaI0WSA4:3.00:5.67:1.23#"  // Where 4 is the averaging period, 3.00 is the data within the averaging period, 5.67 is the maximum and 1.23 is the minimum.
-
-## Wind Speed data minimum:
-
-Request: “aaI0WSMN#” ("aaI0WSMN?84#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
-
-Returns: "aaI0WSMN:3.00#"  // Where 3.00 is the data + CRC if requested
-
-## Wind Speed data maximum:
-
-Request: “aaI0WSMX#”  ("aaI0WSMX?e6#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
-
-Returns: "aaI0WSMX:3.00#"  // Where 3.00 is the data + CRC if requested
-
-## What is Anemometer conversion?:
-
-Request: "aaI0WSCON#" ("aaI0WSCON?41#" with CRC)
-
-Returns: "aaI0STWSCONm123.4c567.89#" (from stored values) + CRC if requested
-
-## Set the Anemometer conversion:
-
-Request: "aaI0WSSTm123.4c567.89#"  ("aaI0WSSTm123.4c567.89?38#" with CRC) Where 123.4 is the gradient and 567.89 is the constant (y=mx+c)
-
-Returns: "aaI0STWSSETm123.4c567.89#" (set to the new values) + CRC if requested
-
-Request: "aaI0WSSTm1c0#" or "aaI0WSSTm1c0?da#" with CRC to set m= 1 and c=0. This is useful for initial testing.
-
-## Wind Vane data:
-
-Request: “aaI0WV#”  ("aaI0WV?b4#" with CRC) Where 0 is an ID from 0-7 set by solder on PCB.
-
-Returns:    The instantaneuous direction AND the direction array data
-
-Returns:    "aaI0WV=W:0.00:0.00:0.00:0.00:0.00:0.00:62.00:0.00#" + CRC if requested
-
-## Reset the max, min and wind vane array:
-
-Request: "aaI0RESET#" ("aaI0RESET?d9#" with CRC)
-
-Returns: "aaRESET#"
 
 ## Set the unit to broadcast:
 
@@ -216,44 +172,27 @@ ID selection is by using a blob of solder to connect together some pads labelled
 To change the ID to another number from 0-7 then we can solder the different connection pads to create a binay number. The connections are:
 
 1    |2    |4     | ID
-
 -------|-------|-------|----
-
 NC     |NC     |NC     | 0
-
 CONN |NC     |NC     | 1
-
 NC     |CONN |NC     | 2
-
 CONN |CONN |NC     | 3
-
 NC     |NC     |CONN | 4
-
 CONN |NC     |CONN | 5
-
 NC     |CONN |CONN | 6
-
 CONN |CONN |CONN | 7
 
-## Enter vane training mode:
+## Reset the Min and Max value:
 
-Request: "aaI0VT#" ("aaI0VT?af#" with CRC)
+The min and max of each channel are logged. These are reset if the data is sent in broadcast mode. If the unit is in Response mode then you need to reset the min/max when you have taken the data.
 
-Returns: Enter the vane training routine - use button to go through the different directions and set the values.
+Request: "aaI0RESET?#" ("aaI0RESET?d9#" with CRC)
 
-The serial port will show which direction the vane should be pointing at.
-
-Move the vane to this position and press the user switch (for around 0.5 seconds).
-
-The serial port will show then next direction and will got N, NE, E, SE, S, SW, W, NW and then end.
-
-The unit will also send "aaI0WVOK=NW" + CRC +"#" to report back which direction the unit is now being trained.
-
-When it ends this data is stored within the unit and the direction 'bands' are recaluclated.
+Returns: "aaRESET#"
 
 ## Serial 'Button' press
 
-The command "aaI0BUTTON" + CRC + "#" will act just like a button press. This is for control via a data logger serial port without access to the physical switch.
+The command "aaI0SWA?^^#"  (Where ^^ is the CRC of the data before the ?) will act just like a button press. This is for control via a data logger serial port without access to the physical switch.
 
 ## Add CRC check:
 
@@ -288,6 +227,77 @@ If data is not that length or does not have 'aa' and '#' at start/end then retur
 "aaFAIL4#" = Average not correct/not a number
 
 "aaFAIL5#" = Start/End chars not correct
+
+
+# Sensor Specific Commands
+For each sensor type there are additional commands. These are only available if the unit is in the correct mode.
+They are listed here.
+
+## Wind Speed Sensor (Vane and Anemometer)
+
+### Wind Speed data:
+
+Request: “aaI0WSA4#”  ("aaI0WSA4?19#" with CRC)  Where 0 is an ID from 0-7 set by solder on PCB. 4 is the averaging period (0=1s, 1=10s, 2 = 60s, 3 = 600s, 4=3600s)
+
+Returns: "aaI0WSA4:3.00:5.67:1.23#"  // Where 4 is the averaging period, 3.00 is the data within the averaging period, 5.67 is the maximum and 1.23 is the minimum.
+
+### Wind Speed data minimum:
+
+Request: “aaI0WSMN#” ("aaI0WSMN?84#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
+
+Returns: "aaI0WSMN:3.00#"  // Where 3.00 is the data + CRC if requested
+
+### Wind Speed data maximum:
+
+Request: “aaI0WSMX#”  ("aaI0WSMX?e6#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
+
+Returns: "aaI0WSMX:3.00#"  // Where 3.00 is the data + CRC if requested
+
+### What is Anemometer conversion?:
+
+Request: "aaI0WSCON#" ("aaI0WSCON?41#" with CRC)
+
+Returns: "aaI0STWSCONm123.4c567.89#" (from stored values) + CRC if requested
+
+### Set the Anemometer conversion:
+
+Request: "aaI0WSSTm123.4c567.89#"  ("aaI0WSSTm123.4c567.89?38#" with CRC) Where 123.4 is the gradient and 567.89 is the constant (y=mx+c)
+
+Returns: "aaI0STWSSETm123.4c567.89#" (set to the new values) + CRC if requested
+
+Request: "aaI0WSSTm1c0#" or "aaI0WSSTm1c0?da#" with CRC to set m= 1 and c=0. This is useful for initial testing.
+
+### Wind Vane data:
+
+Request: “aaI0WV#”  ("aaI0WV?b4#" with CRC) Where 0 is an ID from 0-7 set by solder on PCB.
+
+Returns:    The instantaneuous direction AND the direction array data
+
+Returns:    "aaI0WV=W:0.00:0.00:0.00:0.00:0.00:0.00:62.00:0.00#" + CRC if requested
+
+### Reset the max, min and wind vane array:
+
+Request: "aaI0RESET#" ("aaI0RESET?d9#" with CRC)
+
+Returns: "aaRESET#"
+
+### Enter vane training mode:
+
+Request: "aaI0VT#" ("aaI0VT?af#" with CRC)
+
+Returns: Enter the vane training routine - use button to go through the different directions and set the values.
+
+The serial port will show which direction the vane should be pointing at.
+
+Move the vane to this position and press the user switch (for around 0.5 seconds).
+
+The serial port will show then next direction and will got N, NE, E, SE, S, SW, W, NW and then end.
+
+The unit will also send "aaI0WVOK=NW" + CRC +"#" to report back which direction the unit is now being trained.
+
+When it ends this data is stored within the unit and the direction 'bands' are recaluclated.
+
+
 
 # Overview of Connections
 
