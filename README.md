@@ -1,7 +1,7 @@
 
-# RS485InterfaceBoard
+# Sensor Interface Board
 
-A unit to interface various RS485 sensors with a simple serial interface via an ATMega328-based circuit. The unit also provides averaged data, controlled stepped-up supply voltage and a field-adjustable ID.
+A unit to interface various sensors (digital/analog/RS485) with a simple serial interface via an ATMega328-based circuit. The unit also provides averaged data, controlled stepped-up supply voltage and a field-adjustable ID.
 
 "Why do you need that?", you ask.... 
 
@@ -46,7 +46,7 @@ The two modes work together - you can have the unit sending regular data and als
 It runs on an ATMega328 running at 16MHz with selectable baud serial (up to 57600). It comes pre-programmed, but new code can be uploaded via the Arduino IDE, with the Uno bootloader. See firmware for more details.
 
 
-## RS485 Sensor Types
+## Sensor Types
 
 There are a huge range of RS485 sensors for many different variables. I'd like this unit to be adaptable to work with a variety of sensors with minila code changes.
 
@@ -65,7 +65,7 @@ PAR Sensor                 |       |          | PR           |                  
 
 # Hardware
 
-The PCB was designed in KiCAD and is available here. A small PCB has been designed.
+A number of PCBs have been designed in KiCAD. This repository holds the RS485 sensor and is available here. A small PCB has been designed.
 
 There is one reset switch, one user input switch and one LED output. 
 
