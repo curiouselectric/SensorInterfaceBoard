@@ -17,7 +17,7 @@ The problem with measuring sensors with values that change relatively quickly is
 
 Wire up your RS485 sensor. Power the unit up. Then it will save the averaged data for you. You can then get hold of the data through serial requests and process as you need.
 
-![Overview](https://github.com/curiouselectric/RS485InterfaceBoard/blob/779b627fa3202d53ca6c4beaae3cd90f97ab3141/RS485%20Interface%20Board%20Instructions/Images/RS485%20Interface%20overview.png?raw=true)
+![Overview](https://github.com/curiouselectric/SensorInterfaceBoard/blob/1cc6fdd7eef303f40e9d5f870216e7cde911cf6a/RS485%20Interface%20Board%20Instructions/Images/Sensor%20Interface%20overview.png)
 
 I wrote this to interface to an ESP32 data logger, which sleeps most of the time. It wakes up, talks to the RS485 sensor, gets the data it needs, then goes back to sleep, knowing the RS485 Interface Board is always monitoring.
 
@@ -31,13 +31,13 @@ There are two mode of operation, depending upon your use case:
 
 In this mode then the unit responds to serial requests made. You ask the sensor for data and this is returned. It never sends anything unless asked.
 
-![Response](https://github.com/curiouselectric/RS485InterfaceBoard/blob/048843a24f9ec3a42a6946c3067e17d5d328104e/RS485%20Interface%20Board%20Instructions/Images/RS485%20Interface%20response.png?raw=true)
+![Response](https://github.com/curiouselectric/SensorInterfaceBoard/blob/1cc6fdd7eef303f40e9d5f870216e7cde911cf6a/RS485%20Interface%20Board%20Instructions/Images/Sensor%20Interface%20response.png)
 
 ## Broadcast Mode
 
 In this mode then the unit regularly sends data via the serial connunication. It will send the averaged data for (0) 1 second, (1) 10 second, (2) 1 min, (3) 10 min and (4) 1 hour averaged data. If this is set to (5) then the unit does not send any data. The send mode is stored in EEPROM, so it will start sending data again even if power is lost.
 
-![Broadcast](https://github.com/curiouselectric/RS485InterfaceBoard/blob/048843a24f9ec3a42a6946c3067e17d5d328104e/RS485%20Interface%20Board%20Instructions/Images/RS485%20Interface%20%20broadcast.png?raw=true)
+![Broadcast](https://github.com/curiouselectric/SensorInterfaceBoard/blob/1cc6fdd7eef303f40e9d5f870216e7cde911cf6a/RS485%20Interface%20Board%20Instructions/Images/Sensor%20Interface%20%20broadcast.png)
 
 Boradcast mode works well if the logger is always listening and you only have one sensor in range. If more than one sensor is in range then the data will clash and potentially cause issues, in which case use Response mode.
 
