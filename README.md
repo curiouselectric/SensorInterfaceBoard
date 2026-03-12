@@ -58,7 +58,10 @@ This is a list of the sensor types which have been implemented with this softwar
 Sensor Name                |  Ref  |  Version | Device Type  |   ID                   | Link                                                 | Notes  |
 ---------------------------|-------|----------|--------------|------------------------|------------------------------------------------------|--------|
 Soil Temperature & Humidity|ZTS-3000|1.0      | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
-PAR Sensor| |    | PR           | | |        |
+Wind Sensor                |       |          | WT           |                         |[https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface](https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface)  |        |
+Irradiance Sensor          |       |          | IR           |                         | |        |
+PAR Sensor                 |       |          | PR           |                         | |        |
+
 
 # Hardware
 
