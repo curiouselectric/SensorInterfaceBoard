@@ -341,7 +341,7 @@ Returns: "aaRESET#"
 
 ### Enter vane training mode:
 
-Request: "aaI0VT#" ("aaI0VT?af#" with CRC)
+Request: "aaI0VT?#" ("aaI0VT?af#" with CRC) OR long press of the button (>1 second) will enter this mode.
 
 Returns: Enter the vane training routine - use button to go through the different directions and set the values.
 
