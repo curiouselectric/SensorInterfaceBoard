@@ -7,6 +7,7 @@
 class data_channel {
   public:
     char  id;             // This is used to identify what the type of data is in this channel: eg T for temp, H for humidity, etc. // NOT YET IMPLEMENTED
+    
     int   data_send_time; // This holds a value of when to check the sensor and update the data values (0 = 0.1S,  1 = 1S, 2 = 10S, 3 = 60S, 4 = 600S, 5 = 3600S)
 
     float data_1s;
@@ -25,6 +26,11 @@ class data_channel {
     float data_600s_holder;
     float data_3600s_holder;
 
+    #ifdef WIND_SENSOR
+    float wind_speed_conv_m;  // The conversion is y=mx+c, with the m and c here.
+    float wind_speed_conv_c;
+    #endif
+    
     // This is the constructor
     data_channel() {
       data_send_time = 0; 

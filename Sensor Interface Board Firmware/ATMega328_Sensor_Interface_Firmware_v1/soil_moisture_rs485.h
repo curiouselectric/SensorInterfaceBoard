@@ -1,3 +1,4 @@
+#ifdef SOIL_MOISTURE_SENSOR
 
 /****************************************************************************/
 /***        Including Files                                               ***/
@@ -13,7 +14,6 @@
 /***        Class Definition                                              ***/
 /****************************************************************************/
 
-
 class moistureSensor
 {
 public:
@@ -26,3 +26,5 @@ private:
   unsigned int calc_CRC16(unsigned char *buf, int len); 
 };
 extern moistureSensor soilMoistureSensor;
+
+#endif

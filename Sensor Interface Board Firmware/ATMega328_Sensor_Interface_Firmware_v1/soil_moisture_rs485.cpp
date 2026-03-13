@@ -2,6 +2,8 @@
 //#include "soil_moisture_rs485.h"
 #include <SoftwareSerial.h>
 
+#ifdef SOIL_MOISTURE_SENSOR
+
 //#define DEBUG_SOIL_MOISTURE   // Use this to set debug messages on/off
 
 moistureSensor soilMoistureSensor;
@@ -33,21 +35,21 @@ void moistureSensor::begin(void) {
 bool moistureSensor::readHumiture(byte ID) {
   bool returnData = false;
 
-// #ifdef DEBUG_SOIL_MOISTURE
-//   Serial.print(F("ID is:"));
-//   Serial.println(ID, HEX);
-// #endif
+  // #ifdef DEBUG_SOIL_MOISTURE
+  //   Serial.print(F("ID is:"));
+  //   Serial.println(ID, HEX);
+  // #endif
 
   soilSensorRequestNoCRC[0] = ID;
   for (int i = 0; i < sizeof(soilSensorRequestData); i++) {
     soilSensorRequestNoCRC[i + 1] = soilSensorRequestData[i];
   }
-// #ifdef DEBUG_SOIL_MOISTURE
-//   for (int i = 0; i < sizeof(soilSensorRequestNoCRC); i++) {
-//     Serial.print(soilSensorRequestNoCRC[i], HEX);
-//   }
-//   Serial.println();
-// #endif
+  // #ifdef DEBUG_SOIL_MOISTURE
+  //   for (int i = 0; i < sizeof(soilSensorRequestNoCRC); i++) {
+  //     Serial.print(soilSensorRequestNoCRC[i], HEX);
+  //   }
+  //   Serial.println();
+  // #endif
 
   // Calculate the CRC16 value (depends upon the sensor ID)
   unsigned int CRCvalue = calc_CRC16(soilSensorRequestNoCRC, sizeof(soilSensorRequestNoCRC));
@@ -58,13 +60,13 @@ bool moistureSensor::readHumiture(byte ID) {
   soilSensorRequest[6] = highByte(CRCvalue);
   soilSensorRequest[7] = lowByte(CRCvalue);
 
-// #ifdef DEBUG_SOIL_MOISTURE
-//   for (int i = 0; i < sizeof(soilSensorRequest); i++) {
-//     Serial.print(soilSensorRequest[i], HEX);
-//     Serial.print(" ");
-//   }
-//   Serial.println();
-// #endif
+  // #ifdef DEBUG_SOIL_MOISTURE
+  //   for (int i = 0; i < sizeof(soilSensorRequest); i++) {
+  //     Serial.print(soilSensorRequest[i], HEX);
+  //     Serial.print(" ");
+  //   }
+  //   Serial.println();
+  // #endif
   // Send the request to the soil sensor
   mod.write(soilSensorRequest, sizeof(soilSensorRequest));
   delay(200);
@@ -84,16 +86,16 @@ bool moistureSensor::readHumiture(byte ID) {
     while (mod.available() && index < 9) {
       soilSensorResponse[index] = mod.read();
 
-// #ifdef DEBUG_SOIL_MOISTURE
-//       Serial.print(soilSensorResponse[index], HEX);  // Print the received byte in HEX format
-//       Serial.print(" ");
-// #endif
+      // #ifdef DEBUG_SOIL_MOISTURE
+      //       Serial.print(soilSensorResponse[index], HEX);  // Print the received byte in HEX format
+      //       Serial.print(" ");
+      // #endif
 
       index++;
     }
-// #ifdef DEBUG_SOIL_MOISTURE
-//     Serial.println();
-// #endif
+    // #ifdef DEBUG_SOIL_MOISTURE
+    //     Serial.println();
+    // #endif
 
     // Parse and calculate the Moisture value
     int Moisture_Int = int(soilSensorResponse[3] << 8 | soilSensorResponse[4]);
@@ -165,7 +167,7 @@ void moistureSensor::changeID(byte IDold, byte IDnew) {
       index++;
     }
 #ifdef DEBUG_SOIL_MOISTURE
-      Serial.println();
+    Serial.println();
 #endif
   }
 }
@@ -186,3 +188,5 @@ unsigned int moistureSensor::calc_CRC16(unsigned char *buf, int len) {
   crc = ((crc & 0x00ff) << 8) | ((crc & 0xff00) >> 8);
   return crc;
 }
+
+#endif

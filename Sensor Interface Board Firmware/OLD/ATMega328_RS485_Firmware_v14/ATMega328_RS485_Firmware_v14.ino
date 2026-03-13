@@ -20,21 +20,29 @@
    At all other times then the unit is asleep.
 
    More construction details are here:
-   https://github.com/curiouselectric/RS485InterfaceBoard
+   For the RS485 board:
+   https://github.com/curiouselectric/SensorInterfaceBoard
+   For the Wint Sensor Interface board:
+
+   For the Solar Irradiance Board:
+   
 
    Details on this construction are here:
+
 
    Please see the github rpository readme for all the serial commands available.
 
     The ATMega382p IC can have Arduino Uno or MiniCore as the bootloader. MiniCore is slightly more efficient and allows the use of 8Mhz oscillator for 3.3V operation.
     Uno bootloader is always 16MHz.
 
+   Wind Sensor intrafce has a 8MHz external clock - use minicore for this board:
    To program it with MiniCore bootloader:
    Easiest method is:
    Install MiniCore from here: https://github.com/MCUdude/MiniCore
    Add to preferences and then board manager.
    Use minicore to burn the bootloader with an Arduino as an ISP using the 'Burn Bootloader' option
-
+   
+   The Sesnor interface board has an UNO bootloader and 16MHz external clock - use the UNO bootloader:
    To program with Uno bootloader:
    Follow online instructions or use Arduino as ISP.
 */
@@ -54,8 +62,6 @@
 #ifdef ADD_CRC_CHECK
 #include "crc_check.h"
 #endif
-
-
 
 // ****** This is for the buttons button2 library used and needs to be installed ********
 // https://github.com/LennartHennigs/Button2
@@ -140,8 +146,23 @@ volatile int data_counter_60s = 0;
 volatile int data_counter_600s = 0;
 volatile int data_counter_3600s = 0;
 
-void checkSensorData(int _channel_number) {
+#ifdef WIND_SENSOR
+long int debounce_time = millis();
+// *********** This is for the pulse counter ***********************
+pulse_counter_ pulse_counter;
+// // *********** This is for the wind vane ***********************
+// wind_vane_array_ext    wind_vane_data;
+//****ISR Function for pulse counting for wind speed************
+void ISR_PULSE_0() {
+  if (millis() > debounce_time + DEBOUNCE_DELAY) {
+    pulse_counter.pulse_counter_1++;  // Increment the counter
+    debounce_time = millis();
+  }
+}
+#endif
 
+
+void checkSensorData(int _channel_number) {
   // This checks  the data for the particular channel number depedning upon the data send time:
   switch (my_sensor_data[_channel_number].data_send_time) {
     case 0:
@@ -183,7 +204,6 @@ float getSensorData(int _channel_number) {
     power_on_flag = true;
   }
 
-
 #ifdef SOIL_MOISTURE_SENSOR
   // get the data
   while (soilMoistureSensor.readHumiture(1) != true) {}
@@ -199,9 +219,13 @@ float getSensorData(int _channel_number) {
   Serial.print(soilMoistureSensor.soilTemperatureC);
   Serial.println(F(" °C"));
 #endif
+#endif
 
-#elif
-
+#ifdef WIND_SENSOR
+  // Get the data
+  if (_channel_number == 0) {
+    _data = (float)pulse_counter.pulse_counter_1;  // Store it here, in case it updates during this analysis
+  }
 #endif
 
   // Power OFF if we have checked all the channels and the power was switched on
@@ -218,13 +242,18 @@ float getSensorData(int _channel_number) {
 void t1Callback() {
   // This loop runs every 100mS
   // This will records the sensor value and store its it in the my_sensor_data array
-
   // Check the sensor for data, but only if config shows it should be checked at that rate:
   for (int j = 0; j < NUM_CHANNELS; j++) {
     if (my_sensor_data[j].data_send_time == 0) {
       checkSensorData(j);
     }
   }
+#ifdef WIND_SENSOR
+  uint16_t vane_value = analogRead(VANE_PIN);
+  wind_vane_data.data_1s_holder += vane_value;
+  wind_vane_data.build_direction_array(vane_value);
+#endif
+
   // It will then be averaged for 1s, 10s, 60s 10min and 1 hour averages
   data_counter_1s++;  // This counts the correct number of samples we take within the 1S sample period. Used for averaging.
 }
@@ -242,6 +271,26 @@ void t1SCallback() {
         my_sensor_data[j].data_1s_holder = 0;  // Reset the value
       }
 
+#ifdef WIND_SENSOR
+      // Sort out the wind speed values
+      // wind_speed_data.data_1s - convert as a y=mx+c
+      if (my_sensor_data[j].data_1s > 0) {
+        my_sensor_data[j].data_1s = (my_sensor_data[j].data_1s * my_sensor_data[j].wind_speed_conv_m) + my_sensor_data[j].wind_speed_conv_c;
+      } else {
+        my_sensor_data[j].data_1s = 0;  // This stops the unit outputting 'c' when there are no pulses
+        // no pulses is assumed to be zero wind speed (we cannot infer anything else)
+      }
+      pulse_counter.pulse_counter_1 = 0;  // reset the value
+
+      //  ********** Sort out the Wind Vane ***********************************
+      wind_vane_data.data_1s = wind_vane_data.data_1s_holder / data_counter_1s;
+      wind_vane_data.data_1s_holder = 0;  // Reset the holder
+      // Convert the direction_array into average number of seconds in each direction:
+      for (int y = 0; y < 8; y++) {
+        wind_vane_data.direction_array_values[y] += (float)wind_vane_data.direction_array[y] / (float)data_counter_1s;
+        wind_vane_data.direction_array[y] = 0;
+      }
+#endif
       // Here we set the max and min for the data
       if (my_sensor_data[j].data_1s < my_sensor_data[j].data_min) {
         my_sensor_data[j].data_min = my_sensor_data[j].data_1s;
@@ -257,16 +306,16 @@ void t1SCallback() {
       my_sensor_data[j].data_10s_holder += my_sensor_data[j].data_1s;  // This is for the 10s averages
     }
 
-// Output Data to Serial port?:
-#ifdef DEBUG_DATA_1S
-    Serial.print(F("1s: "));
-    for (int y = 0; y < NUM_CHANNELS; y++) {
-      Serial.print((String)my_sensor_data[y].data_1s);  // Print the 1 second data
-      Serial.print(F("\t :"));
-    }
-    Serial.print(F(" N: "));
-    Serial.println(data_counter_1s);
-#endif
+// // Output Data to Serial port?:
+// #ifdef DEBUG_DATA_1S
+//     Serial.print(F("1s: "));
+//     for (int y = 0; y < NUM_CHANNELS; y++) {
+//       Serial.print((String)my_sensor_data[y].data_1s);  // Print the 1 second data
+//       Serial.print(F("\t :"));
+//     }
+//     Serial.print(F(" N: "));
+//     Serial.println(data_counter_1s);
+// #endif
 
     if (checkData.send_sensor_data == 0) {
       sendData(0);
@@ -294,16 +343,16 @@ void t10SCallback() {
       }
     }
 
-    // Output Data to Serial port ?:
-#ifdef DEBUG_DATA_10S
-    Serial.print(F("10s: "));
-    for (int y = 0; y < NUM_CHANNELS; y++) {
-      Serial.print((String)my_sensor_data[y].data_10s);  // Print the 1 second data
-      Serial.print(F("\t :"));
-    }
-    Serial.print(F(" N: "));
-    Serial.println(data_counter_10s);
-#endif
+//     // Output Data to Serial port ?:
+// #ifdef DEBUG_DATA_10S
+//     Serial.print(F("10s: "));
+//     for (int y = 0; y < NUM_CHANNELS; y++) {
+//       Serial.print((String)my_sensor_data[y].data_10s);  // Print the 1 second data
+//       Serial.print(F("\t :"));
+//     }
+//     Serial.print(F(" N: "));
+//     Serial.println(data_counter_10s);
+// #endif
 
     if (checkData.send_sensor_data == 1) {
       sendData(1);
@@ -329,16 +378,16 @@ void t60SCallback() {
     }
 
 
-// Output Data to Serial port?:
-#ifdef DEBUG_DATA_60S
-    Serial.print(F("60s: "));
-    for (int y = 0; y < NUM_CHANNELS; y++) {
-      Serial.print((String)channels[y].data_60s);  // Print the 1 second data
-      Serial.print(F("\t :"));
-    }
-    Serial.print(F(" N: "));
-    Serial.println(data_counter_60s);
-#endif
+// // Output Data to Serial port?:
+// #ifdef DEBUG_DATA_60S
+//     Serial.print(F("60s: "));
+//     for (int y = 0; y < NUM_CHANNELS; y++) {
+//       Serial.print((String)channels[y].data_60s);  // Print the 1 second data
+//       Serial.print(F("\t :"));
+//     }
+//     Serial.print(F(" N: "));
+//     Serial.println(data_counter_60s);
+// #endif
     // Here we want to check if we are regularly sending the data and send if needed:
     if (checkData.send_sensor_data == 2) {
       sendData(2);
@@ -490,18 +539,6 @@ void setup() {
   inputString.reserve(INPUT_STRING_LENGTH);
   returnString.reserve(RETURN_STRING_LENGTH);
 
-  // // Get the m and c wind speed conversion data - if it is NAN then set to simple values (for forst EEPROM save)
-  // EEPROM.get(EEPROM_WIND_CON_M, wind_speed_data.wind_speed_conv_m);
-  // if (isnan(wind_speed_data.wind_speed_conv_m)) {
-  //   wind_speed_data.wind_speed_conv_m = 1.0;
-  //   EEPROM.put(EEPROM_WIND_CON_M, wind_speed_data.wind_speed_conv_m);
-  // }
-  // EEPROM.get(EEPROM_WIND_CON_C, wind_speed_data.wind_speed_conv_c);
-  // if (isnan(wind_speed_data.wind_speed_conv_c)) {
-  //   wind_speed_data.wind_speed_conv_c = 0.0;
-  //   EEPROM.put(EEPROM_WIND_CON_C, wind_speed_data.wind_speed_conv_c);
-  // }
-
   // Get the control int for sending data to serial port
   // This is for constant output data
   checkData.send_sensor_data = EEPROM.read(EEPROM_SEND_DATA);
@@ -536,9 +573,11 @@ void setup() {
   delay(100);
   digitalWrite(LED0_PIN, LOW);
 
+#ifdef USE_RS485_POWER
   // Set up the RS485 power output
   pinMode(RS485_PWR_PIN, OUTPUT);
   digitalWrite(RS485_PWR_PIN, LOW);
+#endif
 
   digitalWrite(LED0_PIN, HIGH);
   delay(100);
@@ -555,8 +594,26 @@ void setup() {
   soilMoistureSensor.begin();
 #endif
 
-  // // Sort out ISR for pulse counting
-  // attachInterrupt(digitalPinToInterrupt(FREQ_PIN), ISR_PULSE_0, FALLING);
+#ifdef WIND_SENSOR
+  // Get the m and c wind speed conversion data - if it is NAN then set to simple values (for forst EEPROM save)
+  EEPROM.get(EEPROM_WIND_CON_M, my_sensor_data[0].wind_speed_conv_m);
+  if (isnan(my_sensor_data[0].wind_speed_conv_m)) {
+    my_sensor_data[0].wind_speed_conv_m = 1.0;
+    EEPROM.put(EEPROM_WIND_CON_M, my_sensor_data[0].wind_speed_conv_m);
+  }
+  EEPROM.get(EEPROM_WIND_CON_C, my_sensor_data[0].wind_speed_conv_c);
+  if (isnan(my_sensor_data[0].wind_speed_conv_c)) {
+    my_sensor_data[0].wind_speed_conv_c = 0.0;
+    EEPROM.put(EEPROM_WIND_CON_C, my_sensor_data[0].wind_speed_conv_c);
+  }
+#ifdef DEBUG_FLAG
+  wind_vane_data.begin(true);
+#else
+  wind_vane_data.begin(false);
+#endif
+  // Sort out ISR for pulse counting
+  attachInterrupt(digitalPinToInterrupt(FREQ_PIN), ISR_PULSE_0, FALLING);
+#endif
 
   // Set up Scheduler:
   runner.init();
@@ -638,7 +695,16 @@ void serialEvent() {
 void sendData(int average_time) {
   // Send data on main serial port:
   returnString = checkData.showChannelData(average_time, UNIT_ID, my_sensor_data);
-
+#ifdef WIND_SENSOR
+  returnString += DELIMITER;
+  returnString += F("V");
+  returnString += DELIMITER;
+  returnString += wind_vane_data.return_direction(analogRead(VANE_PIN));  // Print the instantaneous value of the wind vane as a direction
+  for (int y = 0; y < 8; y++) {
+    returnString += DELIMITER;
+    returnString += (String)wind_vane_data.direction_array_values[y];
+  }
+#endif
 #ifdef ADD_CRC_CHECK
   returnString = add_CRC(returnString);
 #else
@@ -653,4 +719,7 @@ void reset_data() {
     my_sensor_data[j].data_min = 999999;
     my_sensor_data[j].data_max = -999999;
   }
+#ifdef WIND_SENSOR
+  wind_vane_data.reset_vane_direction_array();
+#endif
 }

@@ -1,6 +1,10 @@
+
+
 #include "config.h"
 //#include "soil_moisture_rs485.h"
 #include <SoftwareSerial.h>
+
+#ifdef SOIL_MOISTURE_SENSOR
 
 //#define DEBUG_SOIL_MOISTURE   // Use this to set debug messages on/off
 
@@ -186,3 +190,5 @@ unsigned int moistureSensor::calc_CRC16(unsigned char *buf, int len) {
   crc = ((crc & 0x00ff) << 8) | ((crc & 0xff00) >> 8);
   return crc;
 }
+
+#endif
