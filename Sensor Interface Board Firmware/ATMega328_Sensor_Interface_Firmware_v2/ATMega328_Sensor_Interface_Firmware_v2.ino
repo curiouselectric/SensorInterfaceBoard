@@ -415,9 +415,20 @@ void t3600SCallback() {
   data_counter_3600s = 0;
 }
 
+
 void tap(Button2& btn) {
   // In this routine we figure out which button has been pressed and deal with that:
   if (btn == buttonA) {
+
+    if (btn.wasPressedFor() > 1000) {
+      wind_vane_data.vane_training_mode = !wind_vane_data.vane_training_mode;
+      if (wind_vane_data.vane_training_mode == true) {
+        Serial.println(F("VTENTER"));
+        wind_vane_data.vane_training_direction = -1;  // So we are checking north first
+      } else {
+        Serial.println(F("VTLEAVE"));
+      }
+    }
 
 #ifdef WIND_SENSOR
     // Check if we are in wind training mode?
@@ -430,17 +441,20 @@ void tap(Button2& btn) {
       wind_vane_data.vane_training_direction++;
       // ****** Start of button press for datalogger
       // Need to give command saying button has been pressed (and which direction now in)
-      returnString = "aaI";
+      returnString = F("aaI");
       returnString += (String)UNIT_ID;
-      returnString += "WVOK=";
+      returnString += F("WVOK=");
       returnString += wind_vane_data.vane_directions[wind_vane_data.vane_training_direction];  // Print the instantaneous value of the wind vane as a direction
 #ifdef ADD_CRC_CHECK
         // Add the CRC here: This adds the ? the CRC and the # to the end
       returnString = add_CRC(returnString);
 #else
-      returnString += "#";
+      returnString += F("#");
 #endif
+
       Serial.println(returnString);
+      Serial.println("");   // This is needed just to clear the serial buffer from noise.
+      
       // ****** End of button press for datalogger
       if (wind_vane_data.vane_training_direction >= 8) {
         wind_vane_data.vane_training_direction = 0;
@@ -596,12 +610,12 @@ void setup() {
     EEPROM.put(EEPROM_WIND_CON_C, my_sensor_data[0].wind_speed_conv_c);
   }
 #ifdef DEBUG_FLAG
-// Show the m and c values to convert the wind speed
+  // Show the m and c values to convert the wind speed
   Serial.print(SENSOR_TYPE);
   Serial.print(F("\tm:"));
-  Serial.print(my_sensor_data[0].wind_speed_conv_m);  
+  Serial.print(my_sensor_data[0].wind_speed_conv_m, 4);
   Serial.print(F("\tc:"));
-  Serial.println(my_sensor_data[0].wind_speed_conv_c); 
+  Serial.println(my_sensor_data[0].wind_speed_conv_c, 2);
 #endif
 
 #ifdef DEBUG_FLAG
@@ -690,7 +704,13 @@ void serialEvent() {
 
 void sendData(int average_time) {
   // Send data on main serial port:
+
+#ifdef WIND_SENSOR
+  returnString = checkData.showChannelData(average_time, UNIT_ID, my_sensor_data, true);
+#else
   returnString = checkData.showChannelData(average_time, UNIT_ID, my_sensor_data);
+#endif
+
 #ifdef ADD_CRC_CHECK
   returnString = add_CRC(returnString);
 #else

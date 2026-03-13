@@ -11,7 +11,7 @@
 //#define SOLAR_IRRADIANCE_SENSOR   // For the DIY Solar Irradiance Sensor
 
 // Hardware Definitions
-#define SOFTWARE_VERSION  "1.1" // Defines which version of software - to control updates if needed   
+#define SOFTWARE_VERSION  "1.3" // Defines which version of software - to control updates if needed   
 
 #define LED0_PIN          7     // Indication LED
 #define SWA_PIN           8     // On board user switch (can also be called by serial command)
