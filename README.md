@@ -101,11 +101,10 @@ The mode can also be set with a serial request, using the "Set the unit to broad
 
 # Firmware
 
-This uses an ATMega328 running at 16MHz with 3.3v or 5V supply.
+This uses an ATMega328 with the MiniCore Bootloader. This uses an oscillator running at 16MHz for 5V supply or 8MHz for 3.3V supply. Check the correct oscillator is chosen when uploading.
 
 ## Initial bootloader installation:
 
-UPDATE
 
 You should not need to do this, as the unit should come with this already installed. This is just for information.
 
@@ -117,7 +116,9 @@ Install the bootloader using an Arduino as an ISP. https://www.arduino.cc/en/Tut
 
 Wire up your arduino and an ISP 3x2 header pin onto the wind sensor PCB.
 
-Choose the "ATMega328" option with the "External 8MHz Oscillator" set.
+Choose the "ATMega328" option with the "External 8MHz Oscillator" set for the 3.3V version or "External 16MHz Oscillator" set for the 5V version, depending upon the crystal supplied.
+
+The ATmega328 datasheet says that an 8MHz crystal should be used at 3.3V for reliable serial comms. YMMV. 
 
 You can then use the 'Burn Bootloader' option within 'Tools' in the Arduino IDE. This will install the Minicore bootloader.
 
