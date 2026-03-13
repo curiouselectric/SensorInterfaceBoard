@@ -105,7 +105,6 @@ This uses an ATMega328 with the MiniCore Bootloader. This uses an oscillator run
 
 ## Initial bootloader installation:
 
-
 You should not need to do this, as the unit should come with this already installed. This is just for information.
 
 To upload a bootloader it then MiniCore is used:
@@ -125,7 +124,7 @@ You can then use the 'Burn Bootloader' option within 'Tools' in the Arduino IDE.
 
 ## Program via Arduino IDE
 
-UPDATE
+You can only do this when the bootloader is programmed (this will be programmed for versions supplied by me).
 
 To program it then MiniCore is used:
 
@@ -133,7 +132,11 @@ Install MiniCore from here: https://github.com/MCUdude/MiniCore
 
 Add to preferences and then board manager.
 
-You can then upload code by choosing the "ATMega328" option with the "External 8MHz Oscillator" set.
+Choose the "ATMega328" option with the "External 8MHz Oscillator" set for the 3.3V version or "External 16MHz Oscillator" set for the 5V version, depending upon the crystal supplied.
+
+The ATmega328 datasheet says that an 8MHz crystal should be used at 3.3V for reliable serial comms. YMMV. 
+
+You can then upload code using the 6pin serial/FTDI interface on the board.
 
 # Serial Data and Commands
 
@@ -298,15 +301,15 @@ Returns: "aaI0WSA4:3.00:5.67:1.23#"  // Where 4 is the averaging period, 3.00 is
 
 ### Wind Speed data minimum:
 
-Request: “aaI0WSMN#” ("aaI0WSMN?84#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
+Request: “aaI0RMN#” ("aaI0RMN?^^#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
 
-Returns: "aaI0WSMN:3.00#"  // Where 3.00 is the data + CRC if requested
+Returns: "aaI0RMN:3.00#"  // Where 3.00 is the data + CRC if requested
 
 ### Wind Speed data maximum:
 
-Request: “aaI0WSMX#”  ("aaI0WSMX?e6#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
+Request: “aaI0RMX#”  ("aaI0RMX?^^#" with CRC) - does not matter what averaging period. min/max are just the min/max seen.
 
-Returns: "aaI0WSMX:3.00#"  // Where 3.00 is the data + CRC if requested
+Returns: "aaI0RMX:3.00#"  // Where 3.00 is the data + CRC if requested
 
 ### What is Anemometer conversion?:
 
@@ -351,8 +354,6 @@ The serial port will show then next direction and will got N, NE, E, SE, S, SW, 
 The unit will also send "aaI0WVOK=NW" + CRC +"#" to report back which direction the unit is now being trained.
 
 When it ends this data is stored within the unit and the direction 'bands' are recaluclated.
-
-
 
 # Overview of Connections
 
