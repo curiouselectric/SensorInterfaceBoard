@@ -226,14 +226,18 @@ Request: "aaI0RESET?#" ("aaI0RESET?d9#" with CRC)
 
 Returns: "aaI0RSTOK#"
 
-## Request Temperature and Humidity Data
+## Request Temperature, Humidity and Pressure Data
 
 This command can only be used if the I2C AHT20/BMP280 sensor is attached and has been defined in the code. Otherwise it will return an error.
+
 You can call this at any time and the unit will request from the sensor. It is NOT averaged or requested at any other point.
+
+The Temp and Humidity board is an AHT20 (with device ID 0x38) and a BMP280 is used to measure the air pressure (with device ID 0x77).
 
 Request: "aaI0TEMP?^^#"  (^^ for the CRC)
 
-Returns: "aaI0T$$$H$$$?^^#" (^^ for the CRC) and $$$ are the values (floats) for temeprature in C and Reltive Humidity in %
+Returns: "aaI0T$$.$$H$$.$P$$$$$$?^^#" (^^ for the CRC) and $$$ are the values (floats) for Temeprature in C and Reltive Humidity in % and Air Pressure in Pa.
+Returns: "aaI0T-H-P-#" if the board is not connected or there is an issue wth one of the sensors.
 
 
 ## Serial 'Button' press
