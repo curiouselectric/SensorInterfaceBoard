@@ -1,4 +1,3 @@
-
 # Sensor Interface Board
 
 A unit to interface various sensors (digital/analog/RS485) with a simple serial interface via an ATMega328-based circuit. The unit also provides averaged data, controlled stepped-up supply voltage and a field-adjustable ID.
