@@ -54,14 +54,14 @@ This code base also works with other, non-RS485 sensors, such as wind speed sens
 ## Sensors Implemented:
 This is a list of the sensor types which have been implemented with this software, Along with the version number they were added.
 
-Sensor Name                |  Ref  |  Version | Device Type  |   ID                   | Link                                                 | Notes  |
----------------------------|-------|----------|--------------|------------------------|------------------------------------------------------|--------|
-Soil Temperature & Humidity|ZTS-3000|1.0      | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor)|        |
-Wind Sensor                |       |          | WT           |                         |[https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface](https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface)  |        | 
-PYR20 RS485 Pyranometer Irradiance Sensor          |       |          | PY           |                         |[https://www.aliexpress.com/item/1005002999915991.html](https://www.aliexpress.com/item/1005002999915991.html) |        |
-DIY Irradiance Sensor          |       |          | IR           |                         | |        |
-PAR Sensor                 |       |          | PR           |                         | |        |
-Air Temp & Humidity (AHT20 /BMP280 |       |          | not needed           |                         |AHT20 & BMP280 | [https://www.aliexpress.com/item/1005004460907148.html] |
+Sensor Name                        |  Ref    |  Version | Device Type  |   ID                   | Link                                                 | Notes  |
+-----------------------------------|---------|----------|--------------|------------------------|------------------------------------------------------|--------|
+Soil Temperature & Humidity        |ZTS-3000 |1.0       | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor) | |
+Wind Sensor                        |         |          | WT           |                         |[https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface](https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface)  |        | 
+PYR20 RS485 Pyranometer Irradiance Sensor|   |          | PY           |PYR20              |[https://www.aliexpress.com/item/1005002999915991.html](https://www.aliexpress.com/item/1005002999915991.html) |              |
+DIY Irradiance Sensor              |         |          | IR           |                | | |
+PAR Sensor                         |         |          | PR           |                | | |
+Air Temp & Humidity (AHT20 /BMP280 |         |          | not needed    |AHT20 & BMP280 | [https://www.aliexpress.com/item/1005004460907148.html] | This add onto the board along with a sensor above|
 
 
 # Hardware
@@ -240,7 +240,6 @@ Request: "aaI0TEMP?^^#"  (^^ for the CRC)
 Returns: "aaI0T$$.$$H$$.$P$$$$$$?^^#" (^^ for the CRC) and $$$ are the values (floats) for Temeprature in C and Reltive Humidity in % and Air Pressure in Pa.
 Returns: "aaI0T-H-P-#" if the board is not connected or there is an issue wth one of the sensors.
 
-
 ## Serial 'Button' press
 
 You can simulate a button press with a serial command. This might be useful for some logging applications
@@ -301,7 +300,11 @@ If data is not that length or does not have 'aa' and '#' at start/end then retur
 For each sensor type there are additional commands. These are only available if the unit is in the correct mode.
 They are listed here.
 
-## 'SM' Soil Mositure Sensor
+## 'SM' RS485 Soil Mositure Sensor
+
+There are no extra commands.
+
+## 'PY' RS485 Pyrnanometer Irradiance Sensor
 
 There are no extra commands.
 
@@ -370,5 +373,8 @@ The unit will also send "aaI0WVOK=NW" + CRC +"#" to report back which direction 
 
 When it ends this data is stored within the unit and the direction 'bands' are recaluclated.
 
+
 # Overview of Connections
+
+To Do - Update with new PCB version wiring diagram
 
