@@ -61,7 +61,7 @@ Wind Sensor (speed & direction)    |         |1.3       | WT           |        
 RS485 Pyranometer Irradiance Sensor| PYR20    |1.4         | PY           |PYR20              |[https://www.aliexpress.com/item/1005002999915991.html](https://www.aliexpress.com/item/1005002999915991.html) |              |
 DIY Irradiance Sensor              |         |          | IR           |                |     |     |
 PAR Sensor                         |         |          | PR           |                |     |     |
-Air Temperature/Humidity/Pressure  |         |1.3       | not needed    |AHT20 / BMP280 | [https://www.aliexpress.com/item/1005004460907148.html] | This adds onto the PCB along with a sensor above|
+Air Temperature/Humidity/Pressure  |         |1.3       | not needed    |AHT20 / BMP280 | [https://www.aliexpress.com/item/1005004460907148.html](https://www.aliexpress.com/item/1005004460907148.html) | This adds onto the PCB along with a sensor above|
 
 
 # Hardware
