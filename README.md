@@ -56,12 +56,12 @@ This is a list of the sensor types which have been implemented with this softwar
 
 Sensor Name                        |  Ref    |  Version | Device Type  |   ID                   | Link                                                 | Notes  |
 -----------------------------------|---------|----------|--------------|------------------------|------------------------------------------------------|--------|
-Soil Temperature & Humidity        |ZTS-3000 |1.0       | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor) | |
+Soil Temperature & Humidity        |ZTS-3000 |1.0       | SM           |ZTS-3000-TR-WS-N01     |[https://www.curiouselectric.co.uk/products/soil-moisture-sensor](https://www.curiouselectric.co.uk/products/soil-moisture-sensor) |     |
 Wind Sensor                        |         |          | WT           |                         |[https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface](https://www.curiouselectric.co.uk/collections/monitoring/products/wind-sensor-interface)  |        | 
 PYR20 RS485 Pyranometer Irradiance Sensor|   |          | PY           |PYR20              |[https://www.aliexpress.com/item/1005002999915991.html](https://www.aliexpress.com/item/1005002999915991.html) |              |
-DIY Irradiance Sensor              |         |          | IR           |                | | |
-PAR Sensor                         |         |          | PR           |                | | |
-Air Temp & Humidity (AHT20 /BMP280 |         |          | not needed    |AHT20 & BMP280 | [https://www.aliexpress.com/item/1005004460907148.html] | This add onto the board along with a sensor above|
+DIY Irradiance Sensor              |         |          | IR           |                |     |     |
+PAR Sensor                         |         |          | PR           |                |     |     |
+Air Temp & Humidity (AHT20 /BMP280 |         |          | not needed    |AHT20 & BMP280 | [https://www.aliexpress.com/item/1005004460907148.html] | This adds onto the PCB along with a sensor above|
 
 
 # Hardware
