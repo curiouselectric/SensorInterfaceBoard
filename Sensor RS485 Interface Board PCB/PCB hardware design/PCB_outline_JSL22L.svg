@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="100.0mm"
-   height="100.0mm"
-   viewBox="0 0 100.0 100.0"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="PCB_outline_JSL22L.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   id="svg5"
+   version="1.1"
+   viewBox="0 0 100.0 100.0"
+   height="100.0mm"
+   width="100.0mm"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="2.1543544"
-     inkscape:cx="142.96626"
-     inkscape:cy="200.52411"
+     inkscape:cx="33.420685"
+     inkscape:cy="204.7017"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -53,9 +53,9 @@
      inkscape:groupmode="layer"
      id="g196">
     <path
-       id="rect409"
-       style="font-variation-settings:normal;opacity:1;vector-effect:non-scaling-stroke;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline;stop-color:#000000;stop-opacity:1"
-       d="M 20.0794 9.99991 L 19.815 10.0132 L 19.5583 10.0521 L 19.3108 10.1155 L 19.0736 10.202 L 18.8481 10.3103 L 18.6354 10.4392 L 18.437 10.5875 L 18.254 10.7537 L 18.0878 10.9367 L 17.9396 11.1351 L 17.8106 11.3478 L 17.7023 11.5733 L 17.6158 11.8105 L 17.5524 12.058 L 17.5135 12.3147 L 17.5002 12.5791 L 17.5002 17.5002 L 12.5791 17.5002 L 12.3147 17.5135 L 12.058 17.5524 L 11.8105 17.6158 L 11.5733 17.7023 L 11.3478 17.8106 L 11.1351 17.9396 L 10.9367 18.0878 L 10.7537 18.254 L 10.5875 18.437 L 10.4392 18.6354 L 10.3103 18.8481 L 10.202 19.0736 L 10.1155 19.3108 L 10.0521 19.5583 L 10.0132 19.815 L 9.99991 20.0794 L 9.99991 79.9207 L 10.0132 80.1851 L 10.0521 80.4418 L 10.1155 80.6893 L 10.202 80.9265 L 10.3103 81.152 L 10.4392 81.3647 L 10.5875 81.5631 L 10.7537 81.7461 L 10.9367 81.9123 L 11.1351 82.0605 L 11.3478 82.1895 L 11.5733 82.2978 L 11.8105 82.3843 L 12.058 82.4477 L 12.3147 82.4866 L 12.5791 82.4999 L 17.5002 82.4999 L 17.5002 87.421 L 17.5135 87.6854 L 17.5524 87.9421 L 17.6158 88.1896 L 17.7023 88.4268 L 17.8106 88.6523 L 17.9396 88.865 L 18.0878 89.0634 L 18.254 89.2464 L 18.437 89.4126 L 18.6354 89.5609 L 18.8481 89.6898 L 19.0736 89.7981 L 19.3108 89.8846 L 19.5583 89.948 L 19.815 89.9869 L 20.0794 90.0002 L 79.9207 90.0002 L 80.1851 89.9869 L 80.4418 89.948 L 80.6893 89.8846 L 80.9265 89.7981 L 81.152 89.6898 L 81.3647 89.5609 L 81.5631 89.4126 L 81.7461 89.2464 L 81.9123 89.0634 L 82.0605 88.865 L 82.1895 88.6523 L 82.2978 88.4268 L 82.3843 88.1896 L 82.4477 87.9421 L 82.4866 87.6854 L 82.4999 87.421 L 82.4999 82.4999 L 87.421 82.4999 L 87.6854 82.4866 L 87.9421 82.4477 L 88.1896 82.3843 L 88.4268 82.2978 L 88.6523 82.1895 L 88.865 82.0605 L 89.0634 81.9123 L 89.2464 81.7461 L 89.4126 81.5631 L 89.5609 81.3647 L 89.6898 81.152 L 89.7981 80.9265 L 89.8846 80.6893 L 89.948 80.4418 L 89.9869 80.1851 L 90.0002 79.9207 L 90.0002 20.0794 L 89.9869 19.815 L 89.948 19.5583 L 89.8846 19.3108 L 89.7981 19.0736 L 89.6898 18.8481 L 89.5609 18.6354 L 89.4126 18.437 L 89.2464 18.254 L 89.0634 18.0878 L 88.865 17.9396 L 88.6523 17.8106 L 88.4268 17.7023 L 88.1896 17.6158 L 87.9421 17.5524 L 87.6854 17.5135 L 87.421 17.5002 L 82.4999 17.5002 L 82.4999 12.5791 L 82.4866 12.3147 L 82.4477 12.058 L 82.3843 11.8105 L 82.2978 11.5733 L 82.1895 11.3478 L 82.0605 11.1351 L 81.9123 10.9367 L 81.7461 10.7537 L 81.5631 10.5875 L 81.3647 10.4392 L 81.152 10.3103 L 80.9265 10.202 L 80.6893 10.1155 L 80.4418 10.0521 L 80.1851 10.0132 L 79.9207 9.99991 L 20.0794 9.99991 L 20.0794 9.99991" />
+       id="rect1212"
+       style="font-variation-settings:normal;opacity:1;vector-effect:non-scaling-stroke;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264585;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline;stop-color:#000000;stop-opacity:1"
+       d="M 27.4567 9.99991 L 27.2049 10.0125 L 26.9605 10.0496 L 26.7247 10.11 L 26.4988 10.1923 L 26.284 10.2955 L 26.0814 10.4183 L 25.8924 10.5594 L 25.7181 10.7177 L 25.5597 10.892 L 25.4185 11.0809 L 25.2957 11.2834 L 25.1925 11.4982 L 25.1101 11.7241 L 25.0498 11.9599 L 25.0127 12.2043 L 25 12.4561 L 25 17.5002 L 12.5791 17.5002 L 12.3146 17.5135 L 12.058 17.5524 L 11.8105 17.6158 L 11.5733 17.7023 L 11.3477 17.8106 L 11.1351 17.9395 L 10.9366 18.0878 L 10.7537 18.254 L 10.5874 18.437 L 10.4392 18.6354 L 10.3103 18.848 L 10.202 19.0736 L 10.1155 19.3108 L 10.0521 19.5583 L 10.0132 19.815 L 9.99991 20.0794 L 9.99991 79.9207 L 10.0132 80.1851 L 10.0521 80.4418 L 10.1155 80.6893 L 10.202 80.9265 L 10.3103 81.152 L 10.4392 81.3647 L 10.5874 81.5631 L 10.7537 81.7461 L 10.9366 81.9123 L 11.1351 82.0606 L 11.3477 82.1895 L 11.5733 82.2978 L 11.8105 82.3843 L 12.058 82.4477 L 12.3146 82.4866 L 12.5791 82.4999 L 25 82.4999 L 25 87.544 L 25.0127 87.7958 L 25.0498 88.0402 L 25.1101 88.276 L 25.1925 88.5019 L 25.2957 88.7167 L 25.4185 88.9192 L 25.5597 89.1081 L 25.7181 89.2824 L 25.8924 89.4407 L 26.0814 89.5818 L 26.284 89.7046 L 26.4988 89.8078 L 26.7247 89.8901 L 26.9605 89.9505 L 27.2049 89.9876 L 27.4567 90.0002 L 72.5439 90.0002 L 72.7957 89.9876 L 73.0401 89.9505 L 73.2759 89.8901 L 73.5017 89.8078 L 73.7165 89.7046 L 73.919 89.5818 L 74.108 89.4407 L 74.2823 89.2824 L 74.4406 89.1081 L 74.5817 88.9192 L 74.7045 88.7167 L 74.8077 88.5019 L 74.89 88.276 L 74.9503 88.0402 L 74.9874 87.7958 L 75.0001 87.544 L 75.0001 82.4999 L 87.421 82.4999 L 87.6855 82.4866 L 87.9421 82.4477 L 88.1896 82.3843 L 88.4268 82.2978 L 88.6524 82.1895 L 88.865 82.0606 L 89.0634 81.9123 L 89.2464 81.7461 L 89.4127 81.5631 L 89.5609 81.3647 L 89.6898 81.152 L 89.7981 80.9265 L 89.8846 80.6893 L 89.948 80.4418 L 89.9869 80.1851 L 90.0002 79.9207 L 90.0002 20.0794 L 89.9869 19.815 L 89.948 19.5583 L 89.8846 19.3108 L 89.7981 19.0736 L 89.6898 18.848 L 89.5609 18.6354 L 89.4127 18.437 L 89.2464 18.254 L 89.0634 18.0878 L 88.865 17.9395 L 88.6524 17.8106 L 88.4268 17.7023 L 88.1896 17.6158 L 87.9421 17.5524 L 87.6855 17.5135 L 87.421 17.5002 L 75.0001 17.5002 L 75.0001 12.4561 L 74.9874 12.2043 L 74.9503 11.9599 L 74.89 11.7241 L 74.8077 11.4982 L 74.7045 11.2834 L 74.5817 11.0809 L 74.4406 10.892 L 74.2823 10.7177 L 74.108 10.5594 L 73.919 10.4183 L 73.7165 10.2955 L 73.5017 10.1923 L 73.2759 10.11 L 73.0401 10.0496 L 72.7957 10.0125 L 72.5439 9.99991 L 27.4567 9.99991" />
   </g>
   <g
      inkscape:label="B.Cu"
@@ -109,42 +109,7 @@
   <g
      inkscape:label="Dwgs.User"
      inkscape:groupmode="layer"
-     id="g210">
-    <rect
-       style="font-variation-settings:normal;opacity:1;vector-effect:non-scaling-stroke;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline;stop-color:#000000;stop-opacity:1"
-       id="rect965"
-       width="3"
-       height="25"
-       x="48.5"
-       y="10.000001"
-       ry="1.5" />
-    <rect
-       style="font-variation-settings:normal;vector-effect:non-scaling-stroke;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline;stop-color:#000000"
-       id="rect965-1"
-       width="3"
-       height="25"
-       x="48.5"
-       y="-90"
-       ry="1.5"
-       transform="rotate(90)" />
-    <rect
-       style="font-variation-settings:normal;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
-       id="rect965-8"
-       width="3"
-       height="25"
-       x="48.5"
-       y="65"
-       ry="1.5" />
-    <rect
-       style="font-variation-settings:normal;vector-effect:non-scaling-stroke;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline;stop-color:#000000"
-       id="rect965-6"
-       width="3"
-       height="25"
-       x="48.5"
-       y="-35"
-       ry="1.5"
-       transform="rotate(90)" />
-  </g>
+     id="g210" />
   <g
      inkscape:label="Drill"
      inkscape:groupmode="layer"
