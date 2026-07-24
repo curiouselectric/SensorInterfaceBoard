@@ -47,7 +47,7 @@ It runs on an ATMega328 running at 16MHz with selectable baud serial (up to 5760
 
 ## Sensor Types
 
-There are a huge range of RS485 sensors for many different variables. I'd like this unit to be adaptable to work with a variety of sensors with minila code changes.
+There are a huge range of RS485 sensors for many different variables. I'd like this unit to be adaptable to work with a variety of sensors with minimal code changes.
 
 This code base also works with other, non-RS485 sensors, such as wind speed sensors, wind vanes and solar irradiance sensors.
 
