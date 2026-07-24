@@ -304,10 +304,9 @@ They are listed here.
 
 There are no extra commands.
 
-## 'PY' RS485 Pyrnanometer Irradiance Sensor
+## 'PY' RS485 Pyranometer Irradiance Sensor
 
 There are no extra commands.
-
 
 ## 'WS' Wind Speed Sensor (Vane and Anemometer)
 
