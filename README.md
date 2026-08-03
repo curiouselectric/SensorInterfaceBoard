@@ -160,9 +160,9 @@ If the unit is in broadcast mode then the minimum and maximum wind speeds and th
 
 ## What is baud rate?:
 
-Request: "aaI0STBD?#" ("aaI0BD?dc#" with CRC)
+Request: "aaI0BD?#" ("aaI0BD?dc#" with CRC)
 
-Returns: "aI0CHBD9600?^^#"  // Where 9600 is the baud rate 
+Returns: "aI0BD9600?^^#"  // Where 9600 is the baud rate 
 
 ## Set Baud Rate:
 
